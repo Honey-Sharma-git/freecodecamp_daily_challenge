@@ -39,7 +39,6 @@ export const LOOKUP_TABLE = {
   travelling: "traveling",
   tyre: "tire",
   favourite: "favorite",
-  jewellery: "jewelry",
   boot: "trunk",
 
   // --- Vocabulary / Phrase Matches ---
@@ -47,7 +46,6 @@ export const LOOKUP_TABLE = {
   autumn: "fall",
   bin: "trash can",
   bonnet: "hood",
-  boot: "trunk",
   cinema: "movie theater",
   courgette: "zucchini",
   crisps: "potato chips",
@@ -76,7 +74,7 @@ export const LOOKUP_TABLE = {
   torch: "flashlight",
   trousers: "pants",
   waistcoat: "vest",
-};
+} as const;
 
 export const DETECT_MUTATION_ERROR_MESSAGES = {
   STRAND1_SHOULD_BE_A_STRING: "strand1 should be a string",
@@ -87,18 +85,18 @@ export const DETECT_MUTATION_ERROR_MESSAGES = {
   STRAND_CONTAINS_INVALID_CHARACTERS: "strand contains invalid characters",
   STRAND1_CONTAINS_INVALID_CHARACTERS: "strand1 contains invalid characters",
   STRAND2_CONTAINS_INVALID_CHARACTERS: "strand2 contains invalid characters",
-};
+} as const;
 
-export const BMI_MULTIPLIER = 703;
+export const BMI_MULTIPLIER = 703 as const;
 
 export const BMI_ERROR_MESSAGES = {
   WEIGHT_SHOULD_BE_A_NUMBER: "Weight should be a number",
   HEIGHT_SHOULD_BE_A_NUMBER: "Height should be a number",
   MISSING_HEIGHT_AS_ARGUMENT: "Missing height as argument",
   MISSING_WEIGHT_AS_ARGUMENT: "Missing weight as argument",
-};
+} as const;
 
-export const LEET_CODES = {
+export const LEET_CODES: Record<string, string> = {
   a: "4",
   e: "3",
   g: "9",

@@ -1,3 +1,7 @@
+type NonStringStrand1 = [unknown, string];
+type NonStringStrand2 = [string, unknown];
+type UnequalLenStrands = [string, string];
+type InvalidStrands = [string, string];
 export const TESTCASES_FOR_DETECT_MUTATIONS = {
   NON_STRING_STRAND1: [
     [1, "A"],
@@ -8,7 +12,7 @@ export const TESTCASES_FOR_DETECT_MUTATIONS = {
     [0, "A"],
     [[], "A"],
     [{}, "A"],
-  ],
+  ] satisfies NonStringStrand1[],
 
   NON_STRING_STRAND2: [
     ["A", 1],
@@ -19,7 +23,7 @@ export const TESTCASES_FOR_DETECT_MUTATIONS = {
     ["A", 0],
     ["A", []],
     ["A", {}],
-  ],
+  ] satisfies NonStringStrand2[],
 
   UNEQUAL_LEN_STRANDS: [
     ["ACTGA", "A"],
@@ -28,7 +32,8 @@ export const TESTCASES_FOR_DETECT_MUTATIONS = {
     ["ACTGASA", "ACTGCA"],
     ["ACTGASA", "ACdTGCAS"],
     ["  ACTGCA  ", "ACTGCAS   "],
-  ],
+  ] satisfies UnequalLenStrands[],
+
   INVALID_STRAND1: [
     ["ab1cgt", "ATCGAT"],
     ["ab", "AT"],
@@ -47,7 +52,8 @@ export const TESTCASES_FOR_DETECT_MUTATIONS = {
     ["   atgc", "ATCG"],
     ["   atgc  ", "ATCG"],
     ["a c t g", "ATCGTCG"],
-  ],
+  ] satisfies InvalidStrands[],
+
   INVALID_STRAND2: [
     ["ATCGAT", "ab1cgt"],
     ["AT", "ab"],
@@ -66,7 +72,7 @@ export const TESTCASES_FOR_DETECT_MUTATIONS = {
     ["ATCG", "   atgc"],
     ["ATCG", "   atgc  "],
     ["ATCGTCG", "a c t g"],
-  ],
+  ] satisfies InvalidStrands[],
 };
 
 export const TESTCASES_FOR_IS_STRAND_VALID = {
@@ -82,6 +88,7 @@ export const TESTCASES_FOR_IS_STRAND_VALID = {
     "ATCG",
     "ATTCGGATCGATCGATCGTTCGGATCGCCT",
   ],
+
   INVALID_STRANDS: [
     "ab1cgt",
     "ab",
@@ -101,6 +108,7 @@ export const TESTCASES_FOR_IS_STRAND_VALID = {
     "   atgc  ",
     "a c t g",
   ],
+
   NON_STRINGS: [undefined, false, true, 0, 1, null, [], {}],
 };
 
@@ -112,6 +120,7 @@ export const TEST_CASES_FOR_CAPITALIZE_WORD = {
     [" honey", "Honey"],
     ["   honey  ", "Honey"],
   ],
+
   ALL_UPPERCASED_WORDS: [
     ["WORD", "Word"],
     ["SHARMA", "Sharma"],
@@ -119,6 +128,7 @@ export const TEST_CASES_FOR_CAPITALIZE_WORD = {
     [" HONEY", "Honey"],
     ["   HONEY  ", "Honey"],
   ],
+
   MIXED_CASING_WORDS: [
     ["WoRD", "Word"],
     ["SHaRmA", "Sharma"],
@@ -126,6 +136,7 @@ export const TEST_CASES_FOR_CAPITALIZE_WORD = {
     [" hONEY", "Honey"],
     ["   Honey  ", "Honey"],
   ],
+
   ALPHA_NUMERIC_WORDS: [
     ["1word", "1word"],
     ["123Sharma", "123sharma"],
@@ -134,6 +145,7 @@ export const TEST_CASES_FOR_CAPITALIZE_WORD = {
     ["   0Honey  ", "0honey"],
   ],
 };
+
 export const BRITISH_TO_AMERICAN_SENTENCES = [
   ["The team is highly unorganised.", "The team is highly unorganized."],
   ["Her favourite hobby is painting.", "Her favorite hobby is painting."],

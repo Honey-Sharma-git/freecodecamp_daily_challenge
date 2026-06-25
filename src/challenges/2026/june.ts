@@ -4,9 +4,9 @@ import {
   DETECT_MUTATION_ERROR_MESSAGES,
   LEET_CODES,
   LOOKUP_TABLE,
-} from "../constants/config";
+} from "../../constants/config";
 
-export function getOddWords(str) {
+export function getOddWords(str: unknown) {
   if (typeof str !== "string") {
     throw new TypeError(`Expected string as parameter, received ${typeof str}`);
   }
@@ -26,7 +26,7 @@ export function getOddWords(str) {
   });
 }
 
-function makeLeet(str) {
+function makeLeet(str: string) {
   let leetChar = "";
 
   for (const char of str) {
@@ -43,13 +43,13 @@ Given an object (JavaScript) or dictionary (Python), determine if it matches the
 }
 Extra keys are allowed */
 
-function isValidSchema(obj) {
+function isValidSchema(obj: unknown) {
   if (Object.prototype.toString.call(obj) === "[object Object]") return false;
 
   return obj;
 }
 
-export function calculateBmi(weight, height) {
+export function calculateBmi(weight?: unknown, height?: unknown): number {
   if (height === undefined) {
     throw new Error(BMI_ERROR_MESSAGES.MISSING_HEIGHT_AS_ARGUMENT);
   }
@@ -87,7 +87,7 @@ If there are no mutations, return an empty array */
  * @param {string} strand2
  * @returns {array} array of indices where strands mismatched.
  */
-export function detectMutations(strand1, strand2) {
+export function detectMutations(strand1: unknown, strand2: unknown): number[] {
   if (typeof strand1 !== "string") {
     throw new Error(DETECT_MUTATION_ERROR_MESSAGES.STRAND1_SHOULD_BE_A_STRING);
   }
@@ -135,7 +135,7 @@ export function detectMutations(strand1, strand2) {
   return mutationsIndices;
 }
 
-export function isStrandValid(strand) {
+export function isStrandValid(strand: unknown): boolean {
   const VALID_STRAND_CHARS = ["A", "T", "C", "G"];
 
   if (typeof strand !== "string") {
@@ -145,15 +145,13 @@ export function isStrandValid(strand) {
   const len = strand.trim().length;
 
   let isValid = true;
-  for (let i = 0; i < len; i++) {
-    const isValidCharPresent = VALID_STRAND_CHARS.includes(strand.trim().at(i));
+  for (const char of strand.trim()) {
+    const isValidCharPresent = VALID_STRAND_CHARS.includes(char);
 
     if (!isValidCharPresent) {
       throw new Error(
         DETECT_MUTATION_ERROR_MESSAGES.STRAND_CONTAINS_INVALID_CHARACTERS,
       );
-      isValid = false;
-      break;
     }
   }
   return isValid;
@@ -168,13 +166,13 @@ Replacements should be case-insensitive. For example, "Colour" should become "Co
 The input may contain words that build on the exact spelling of a root in the table that also need to be changed. For example, "colouring" should become "coloring", and "disorganised" should become "disorganized".
 */
 
-export function capitalizeWord(word) {
+export function capitalizeWord(word: string): string {
   const result =
-    word.trim().at(0).toUpperCase() + word.trim().slice(1).toLowerCase();
+    word?.trim()?.at(0)?.toUpperCase() + word?.trim()?.slice(1)?.toLowerCase();
   return result;
 }
 
-export function britishToAmerican(sentence) {
+export function britishToAmerican(sentence: string): string {
   const lookUpMap = Object.entries(LOOKUP_TABLE);
 
   let str = sentence;
