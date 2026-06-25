@@ -1,20 +1,20 @@
 import {
   BMI_ERROR_MESSAGES,
   DETECT_MUTATION_ERROR_MESSAGES,
-} from "../constants/config";
+} from "../../constants/config";
 import {
   BRITISH_TO_AMERICAN_SENTENCES,
   TEST_CASES_FOR_CAPITALIZE_WORD,
   TESTCASES_FOR_DETECT_MUTATIONS,
   TESTCASES_FOR_IS_STRAND_VALID,
-} from "../constants/testConstants";
+} from "../../constants/testConstants";
 import {
   britishToAmerican,
   calculateBmi,
   capitalizeWord,
   detectMutations,
   isStrandValid,
-} from "../helpers/june";
+} from "../../challenges/2026/june";
 
 describe("Test calculateBmi for Error cases:", () => {
   it(BMI_ERROR_MESSAGES.MISSING_WEIGHT_AS_ARGUMENT, () => {
