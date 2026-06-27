@@ -1,7 +1,0 @@
-import { add } from "./add";
-describe("add", () => {
-    test("should add two numbers", () => {
-        expect(add(2, 3)).toBe(5);
-    });
-});
-//# sourceMappingURL=add.test.js.map
