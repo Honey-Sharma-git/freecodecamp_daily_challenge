@@ -106,3 +106,10 @@ export const LEET_CODES: Record<string, string> = {
   s: "5",
   t: "7",
 };
+
+export const PARSE_FRONTMATTER_ERROR_MESSAGES = {
+  VALIDATE_FRONTMATTER_STR: {
+    EXPECTED_STRING_RECEIVED: "Expected string received",
+    INVALID_FRONTMATTER_STRING: "Invalid frontmatter string",
+  },
+};

@@ -1,9 +1,15 @@
 import {
   BMI_ERROR_MESSAGES,
   DETECT_MUTATION_ERROR_MESSAGES,
+  PARSE_FRONTMATTER_ERROR_MESSAGES,
 } from "../../constants/config";
 import {
   BRITISH_TO_AMERICAN_SENTENCES,
+  FRONTMATTER_STRINGS,
+  KEY_VALUE_ARRAY,
+  MAKE_KEY_VALUE_PAIR_CASES,
+  PARSE_FRONTMATTER_STRINGS_CASES,
+  STRING_WITH_NEWLINE_CHAR,
   TEST_CASES_FOR_CAPITALIZE_WORD,
   TESTCASES_FOR_DETECT_MUTATIONS,
   TESTCASES_FOR_IS_STRAND_VALID,
@@ -14,6 +20,11 @@ import {
   capitalizeWord,
   detectMutations,
   isStrandValid,
+  getNewLineCharRemovedArr,
+  validateFrontMatterStr,
+  extractKeyValuePair,
+  mapKeyValuePair,
+  parseFrontmatter,
 } from "../../challenges/2026/june";
 
 describe("Test calculateBmi for Error cases:", () => {
@@ -183,6 +194,73 @@ describe("Test britishToAmerican", () => {
     `britishToAmerican(%p) will return %p`,
     (british, american) => {
       expect(britishToAmerican(british)).toMatch(american);
+    },
+  );
+});
+
+describe("Test validateFrontMatterStr", () => {
+  test.each(FRONTMATTER_STRINGS.VALID_STRINGS)(
+    "validateFrontMatterStr for %p should return true",
+    (str) => {
+      expect(validateFrontMatterStr(str)).toBe(true);
+    },
+  );
+
+  test.each(FRONTMATTER_STRINGS.INVALID_STRING)(
+    `validateFrontMatterStr for %p should throw ${
+      PARSE_FRONTMATTER_ERROR_MESSAGES.VALIDATE_FRONTMATTER_STR
+        .INVALID_FRONTMATTER_STRING
+    }`,
+    (str) => {
+      expect(() => validateFrontMatterStr(str)).toThrow(
+        PARSE_FRONTMATTER_ERROR_MESSAGES.VALIDATE_FRONTMATTER_STR
+          .INVALID_FRONTMATTER_STRING,
+      );
+    },
+  );
+
+  test.each(FRONTMATTER_STRINGS.NON_STRINGS)(
+    `For %p, validateFrontMatterStr threw ${PARSE_FRONTMATTER_ERROR_MESSAGES.VALIDATE_FRONTMATTER_STR.EXPECTED_STRING_RECEIVED} %p`,
+    (str, result) => {
+      expect(() => validateFrontMatterStr(str as any)).toThrow(
+        `${PARSE_FRONTMATTER_ERROR_MESSAGES.VALIDATE_FRONTMATTER_STR.EXPECTED_STRING_RECEIVED} ${result}`,
+      );
+    },
+  );
+});
+
+describe("Test getNewLineCharRemovedArr", () => {
+  test.each(STRING_WITH_NEWLINE_CHAR)(
+    "getNewLineCharRemovedArr should return %p for %p",
+    (result, str) => {
+      expect(getNewLineCharRemovedArr(str)).toStrictEqual(result);
+    },
+  );
+});
+
+describe("Test extractKeyValuePair", () => {
+  test.each(KEY_VALUE_ARRAY)(
+    "extractKeyValuePair for %p should return %p",
+    (arg, result) => {
+      expect(extractKeyValuePair(arg)).toStrictEqual(result);
+    },
+  );
+});
+
+describe("Test mapKeyValuePair", () => {
+  test.each(MAKE_KEY_VALUE_PAIR_CASES)(
+    "For %p, mapKeyValuePair should return %p",
+    (arg, result) => {
+      expect(mapKeyValuePair(arg)).toStrictEqual(result);
+    },
+  );
+});
+
+describe("Test parseFrontmatter", () => {
+  test.each(PARSE_FRONTMATTER_STRINGS_CASES)(
+    "For %p parseFrontmatter should return %p",
+    (arg, result) => {
+      expect(parseFrontmatter(arg)).toStrictEqual(result);
     },
   );
 });

@@ -2,6 +2,7 @@ type NonStringStrand1 = [unknown, string];
 type NonStringStrand2 = [string, unknown];
 type UnequalLenStrands = [string, string];
 type InvalidStrands = [string, string];
+type NonStringFormatterStrings = [unknown, string];
 export const TESTCASES_FOR_DETECT_MUTATIONS = {
   NON_STRING_STRAND1: [
     [1, "A"],
@@ -319,4 +320,233 @@ export const BRITISH_TO_AMERICAN_SENTENCES = [
     "He wrote a cheque for the full amount.",
     "He wrote a check for the full amount.",
   ],
+];
+
+export const FRONTMATTER_STRINGS = {
+  NON_STRINGS: [
+    [0, "number"],
+    [1, "number"],
+    [null, "object"],
+    [false, "boolean"],
+    [true, "boolean"],
+    [undefined, "undefined"],
+    [{}, "object"],
+    [[], "object"],
+  ] satisfies NonStringFormatterStrings[],
+
+  VALID_STRINGS: [
+    "---hello---",
+    "---\n---",
+    "---\nhello---",
+    "---\n\nhello---",
+    "---\n\nhello\n---",
+    "---\n\nhello\n\n---",
+    "---\n\nhello\nhi\n\n---",
+    "---name:honey---",
+    "---\nname:honey---",
+    "---\nname:honey\n---",
+    "---\nname:honey\nage:28\n---",
+    "------",
+    "--- Hello ---",
+    "   --- Hello ---   ",
+    "  ---hello---   ",
+    "---\nid: 0\nweight: 72.5\ntemperature: -12\n---",
+    "----Hello---",
+    "---He-llo---",
+  ],
+  INVALID_STRING: [
+    "  ---  ---  Hello ---  ---",
+    "------Hello------",
+    "---Hello---Hi----four---",
+    "  ------  Hello ------",
+    "---------------\nname:honey\nage:28\n-------",
+    "",
+    "  ",
+    "--",
+    "---",
+    "----",
+    "---hello",
+    "----Hello",
+    "- - - Hello ----",
+    "---Hello- - -",
+    "---He--llo---",
+  ],
+};
+
+type MakeKeyValuePair = [
+  string[][],
+  Record<string, string | boolean | number>,
+][];
+
+export const MAKE_KEY_VALUE_PAIR_CASES: MakeKeyValuePair = [
+  [[["name", "honey"]], { name: "honey" }],
+  [[["age", "28"]], { age: 28 }],
+  [
+    [
+      ["age", "28"],
+      ["name", "honey"],
+    ],
+    { name: "honey", age: 28 },
+  ],
+  [
+    [
+      ["age", "28"],
+      ["name", "honey"],
+      ["isFinal", "false"],
+      ["isDraft", "true"],
+      ["mixed", "truefalse01Honey"],
+    ],
+    {
+      name: "honey",
+      age: 28,
+      isFinal: false,
+      isDraft: true,
+      mixed: "truefalse01Honey",
+    },
+  ],
+];
+
+type KeyValuePairs = [string[], string[][]];
+export const KEY_VALUE_ARRAY: KeyValuePairs[] = [
+  [
+    ["name:honey", "age:28"],
+    [
+      ["name", "honey"],
+      ["age", "28"],
+    ],
+  ],
+  [
+    ["name:  honey", "age:28"],
+    [
+      ["name", "honey"],
+      ["age", "28"],
+    ],
+  ],
+  [
+    ["name:  honey", "    age:28"],
+    [
+      ["name", "honey"],
+      ["age", "28"],
+    ],
+  ],
+  [
+    ["     name:  honey    ", "    age:    28"],
+    [
+      ["name", "honey"],
+      ["age", "28"],
+    ],
+  ],
+  [
+    ["name::honey", "age::28"],
+    [
+      ["name", "honey"],
+      ["age", "28"],
+    ],
+  ],
+  [
+    ["name:::honey", "age::28"],
+    [
+      ["name", "honey"],
+      ["age", "28"],
+    ],
+  ],
+  [
+    ["::name:::honey:", ":age:28"],
+    [
+      ["name", "honey"],
+      ["age", "28"],
+    ],
+  ],
+  [
+    ["   :  :   name   ::   :   honey:   ", "   :   age:   28  "],
+    [
+      ["name", "honey"],
+      ["age", "28"],
+    ],
+  ],
+];
+
+type StringWithNewlineChar = [string[], string];
+export const STRING_WITH_NEWLINE_CHAR: StringWithNewlineChar[] = [
+  [["hello"], "\nhello"],
+  [["hello"], "\nhello\n"],
+  [["hello"], "\nhello\n\n"],
+  [["hello"], "\n\nhello\n\n"],
+  [["hello", "honey"], "\n\nhello\nhoney\n\n"],
+  [["name:honey", "age:28"], "\n\nname:honey\nage:28\n\n"],
+  [["name::honey", "age:::28"], "\n\nname::honey\nage:::28\n\n"],
+  [["name:honey", "age:28"], "\n\nname:honey\n\n\nage:28\n\n"],
+  [["name:", "honey", "age:28"], "\n\nname:\nhoney\n\n\nage:28\n\n"],
+  [["name:", "honey", "age", ":28"], "\n\nname:\nhoney\n\n\nage\n:28\n\n"],
+  [["name:  ", "honey", "age", ":28"], "\n\nname:  \nhoney\n\n\nage\n:28\n\n"],
+  [
+    ["name:", "   honey", "age", ":28"],
+    "\n\nname:\n   honey\n\n\nage\n:28\n\n",
+  ],
+  [
+    ["name:", "   honey", "     age", ":28"],
+    "\n\nname:\n   honey\n\n\n     age\n:28\n\n",
+  ],
+  [["name:", "honey", "age", ":28"], "\n\n   name:\nhoney\n\n\nage\n:28\n\n"],
+  [
+    ["name:", "honey", "age", ":28"],
+    "    \n\n   name:\nhoney\n\n\nage\n:28\n\n    ",
+  ],
+  [
+    ["name:", "honey", "age", ":28"],
+    "    \n\n   name:\nhoney\n\n\nage\n:28   \n\n    ",
+  ],
+];
+
+type ParseFrontMatterStringsCases = [
+  string,
+  Record<string, number | boolean | string>,
+][];
+
+export const PARSE_FRONTMATTER_STRINGS_CASES: ParseFrontMatterStringsCases = [
+  [
+    "---\ntitle: My Post\ndraft: false\nviews: 100\n---",
+    { title: "My Post", draft: false, views: 100 },
+  ],
+
+  ["---\n---", {}],
+  ["---\n\n---", {}],
+
+  [
+    "---\nid: 0\nweight: 72.5\ntemperature: -12\n---",
+    { id: 0, weight: 72.5, temperature: -12 },
+  ],
+
+  [
+    "---\nis_published: true\nis_featured: false\n---",
+    { is_published: true, is_featured: false },
+  ],
+
+  [
+    "---\n  title  :   Spaced Out Post   \ncount:   42   \n---",
+    { title: "Spaced Out Post", count: 42 },
+  ],
+
+  [
+    "---\nmeta-description: SEO stuff\nuser_id_2: 999\n---",
+    { "meta-description": "SEO stuff", user_id_2: 999 },
+  ],
+
+  [
+    "---\ntitle: Multi-line Test\n\n\ncategory: Tech\n---",
+    { title: "Multi-line Test", category: "Tech" },
+  ],
+
+  // These test cases need to be handled:
+  // [
+  //   "---\nurl: https://example.com/page\ntime: 14:30:00\n---",
+  //   { url: "https://example.com/page", time: "14:30:00" },
+  // ],
+
+  // [
+  //   "---\nversion: 1.2.3\nphrase: true story\nphone: 0042\n---",
+  //   { version: "1.2.3", phrase: "true story", phone: "0042" },
+  // ],
+
+  // ["---\ndescription: \ntags:\n---", { description: "", tags: "" }],
 ];
