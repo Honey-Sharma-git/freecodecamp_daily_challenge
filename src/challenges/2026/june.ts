@@ -7,49 +7,6 @@ import {
   PARSE_FRONTMATTER_ERROR_MESSAGES,
 } from "../../constants/config";
 
-export function getOddWords(str: unknown) {
-  if (typeof str !== "string") {
-    throw new TypeError(`Expected string as parameter, received ${typeof str}`);
-  }
-
-  if (!str.trim().length) {
-    throw new Error(`Expected string of words received ${str}`);
-  }
-
-  const words = str.trim().split(" ");
-  let oddWords = "";
-
-  words.forEach((word) => {
-    if (word.trim().length === 1 || word.trim().length % 2 !== 0) {
-      oddWords += word;
-      oddWords += " ";
-    }
-  });
-}
-
-function makeLeet(str: string) {
-  let leetChar = "";
-
-  for (const char of str) {
-    leetChar += LEET_CODES[char] ?? char;
-  }
-  return leetChar;
-}
-
-/* Schema Validator Part 1
-Given an object (JavaScript) or dictionary (Python), determine if it matches the following schema:
-
-{
-  username: string
-}
-Extra keys are allowed */
-
-function isValidSchema(obj: unknown) {
-  if (Object.prototype.toString.call(obj) === "[object Object]") return false;
-
-  return obj;
-}
-
 export function calculateBmi(weight?: unknown, height?: unknown): number {
   if (height === undefined) {
     throw new Error(BMI_ERROR_MESSAGES.MISSING_HEIGHT_AS_ARGUMENT);
@@ -265,7 +222,7 @@ export function mapKeyValuePair(arr: string[][]) {
 
     let isBool = false;
     if (value === "false" || value === "true") {
-      value = value === "false" ? false : value === "true" ? true : false;
+      value = value === "false" ? false : true;
       isBool = true;
     }
     if (!isBool && isFinite(Number(value))) {

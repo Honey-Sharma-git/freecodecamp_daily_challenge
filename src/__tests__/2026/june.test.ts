@@ -28,6 +28,12 @@ import {
 } from "../../challenges/2026/june";
 
 describe("Test calculateBmi for Error cases:", () => {
+  test("calculateBmi returns zero", () => {
+    expect(calculateBmi(0, 1)).toBe(0);
+  });
+  test("calculateBmi returns zero", () => {
+    expect(calculateBmi(1, 1)).toBe(703);
+  });
   it(BMI_ERROR_MESSAGES.MISSING_WEIGHT_AS_ARGUMENT, () => {
     expect(() => calculateBmi(undefined, 0)).toThrow(
       BMI_ERROR_MESSAGES.MISSING_WEIGHT_AS_ARGUMENT,
@@ -140,6 +146,12 @@ describe("Test isStrandValid:", () => {
       expect(() => detectMutations(strand1, strand2)).toThrow(
         DETECT_MUTATION_ERROR_MESSAGES.STRAND1_STRAND2_SHOULD_BE_OF_EQUAL_LENGTH,
       );
+    },
+  );
+  test.each(TESTCASES_FOR_DETECT_MUTATIONS.VALID_STRANDS)(
+    `detectMutation for %p and returned %p`,
+    (arg, result) => {
+      expect(detectMutations(arg[0], arg[1])).toStrictEqual(result);
     },
   );
 

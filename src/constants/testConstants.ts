@@ -4,6 +4,19 @@ type UnequalLenStrands = [string, string];
 type InvalidStrands = [string, string];
 type NonStringFormatterStrings = [unknown, string];
 export const TESTCASES_FOR_DETECT_MUTATIONS = {
+  VALID_STRANDS: [
+    [["A", "A"], []],
+    [["AC", "AC"], []],
+    [["ACT", "ACT"], []],
+    [["ACTG", "ACTG"], []],
+    [["ATCG", "ATCG"], []],
+    [["AAA", "AAA"], []],
+    [["TTTT", "TTTT"], []],
+    [["ACTGGGG", "ACTGGGG"], []],
+    [["ATCG", "ATCG"], []],
+    [["ATTCGGATCGATCGATCGTTCGGATCGCCT", "ATTCGGATCGATCGATCGTTCGGATCGCCT"], []],
+  ],
+
   NON_STRING_STRAND1: [
     [1, "A"],
     [undefined, "A"],
@@ -379,6 +392,8 @@ type MakeKeyValuePair = [
 ][];
 
 export const MAKE_KEY_VALUE_PAIR_CASES: MakeKeyValuePair = [
+  [[[]], { defaultKey: "defaultValue" }],
+  [[["someKey"]], { someKey: "defaultValue" }],
   [[["name", "honey"]], { name: "honey" }],
   [[["age", "28"]], { age: 28 }],
   [
@@ -510,6 +525,7 @@ export const PARSE_FRONTMATTER_STRINGS_CASES: ParseFrontMatterStringsCases = [
   ],
 
   ["---\n---", {}],
+  ["  ---  ---  Hello ---  ---", {}],
   ["---\n\n---", {}],
 
   [
